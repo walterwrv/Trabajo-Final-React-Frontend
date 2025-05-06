@@ -17,7 +17,7 @@ const PaginadoPeliculas = () => {
   const obtenerPeliculas = async (paginaActual) => {
     setCargando(true);
     try {
-      const res = await axios.get('http://localhost:5000/api/movies/paginado', {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/movies/paginado`, {
         params: { page: paginaActual, limit: 8 }, // ajustá el limit si querés
       });
       setPeliculas(res.data.data);
@@ -44,7 +44,7 @@ const PaginadoPeliculas = () => {
     if (!confirmar) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/movies/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/movies/${id}`, {
         headers: { Authorization: `${token}` },
       });
 

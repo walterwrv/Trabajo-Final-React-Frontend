@@ -15,7 +15,7 @@ const ImportarPeliculas = () => {
     if (!busqueda.trim()) return;
     setCargando(true);
     try {
-      const res = await axios.get('http://localhost:5000/api/external/search', {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/external/search`, {
         params: { title: busqueda }
       });
       setResultados(res.data);
@@ -34,7 +34,7 @@ const ImportarPeliculas = () => {
   const importarPelicula = async (imdbID) => {
     const token = localStorage.getItem('token');
     try {
-      const res = await axios.post('http://localhost:5000/api/external/import', { imdbID }, {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/external/import`, { imdbID }, {
         headers: { Authorization: token }
       });
 

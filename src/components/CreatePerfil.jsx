@@ -17,7 +17,7 @@ const CreatePerfil = () => {
     try {
       console.log('data ', data)
       console.log('token ', token)
-      await axios.post('http://localhost:5000/api/profiles/create', data, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/profiles/create`, data, {
         headers: { Authorization: `${token}` }
       });
       reset(); // Limpia el formulario

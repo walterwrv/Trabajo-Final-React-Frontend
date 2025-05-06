@@ -12,7 +12,7 @@ const GestionUsuarios = () => {
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/auth', {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/auth`, {
           headers: { Authorization: `${token}` },
         });
         setUsuarios(res.data);
@@ -31,7 +31,7 @@ const GestionUsuarios = () => {
     if (!confirmar) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/auth/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/auth/${id}`, {
         headers: { Authorization: `${token}` },
       });
 
@@ -54,7 +54,7 @@ const GestionUsuarios = () => {
 
   const guardarCambios = async (id) => {
     try {
-      const res = await axios.put(`http://localhost:5000/api/auth/${id}`, formData, {
+      const res = await axios.put(`${import.meta.env.VITE_API_URL}/auth/${id}`, formData, {
         headers: { Authorization: `${token}` },
       });
 

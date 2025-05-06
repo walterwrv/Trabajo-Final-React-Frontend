@@ -14,7 +14,7 @@ const FormularioPelicula = () => {
     if (id) {
       const obtenerPelicula = async () => {
         try {
-          const res = await axios.get(`http://localhost:5000/api/movies/${id}`, {
+          const res = await axios.get(`${import.meta.env.VITE_API_URL}/movies/${id}`, {
             headers: { Authorization: `${token}` },
           });
           reset(res.data); // Llena el formulario
@@ -32,13 +32,13 @@ const FormularioPelicula = () => {
     try {
       if (id) {
         // Editar
-        await axios.put(`http://localhost:5000/api/movies/${id}`, data, {
+        await axios.put(`${import.meta.env.VITE_API_URL}/movies/${id}`, data, {
           headers: { Authorization: `${token}` },
         });
         alert('Película actualizada correctamente');
       } else {
         // Crear
-        await axios.post('http://localhost:5000/api/movies/create', data, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/movies/create`, data, {
           headers: { Authorization: `${token}` },
         });
         alert('Película creada correctamente');

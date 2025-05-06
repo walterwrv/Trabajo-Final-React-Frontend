@@ -11,7 +11,7 @@ const PerfilAdmin = () => {
 
   const fetchPerfiles = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/profiles/all', {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/profiles/all`, {
         headers: { Authorization: `${token}` },
       });
       setPerfiles(res.data.profiles);
@@ -26,7 +26,7 @@ const PerfilAdmin = () => {
     if (!window.confirm('¿Seguro que querés eliminar este perfil?')) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/profiles/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/profiles/${id}`, {
         headers: { Authorization: `${token}` },
       });
       setPerfiles(perfiles.filter(p => p._id !== id));

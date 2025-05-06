@@ -24,7 +24,7 @@ const ProfileSelector = () => {
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/profiles/all', {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/profiles/all`, {
           headers: { Authorization: `${token}` }
         });
         // console.log('Res-> ',res.data.profiles);

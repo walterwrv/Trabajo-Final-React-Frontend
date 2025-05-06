@@ -12,7 +12,7 @@ const Watchlist = () => {
     const fetchWatchlist = async () => {
       const token = localStorage.getItem('token');
       try {
-        const res = await axios.get(`http://localhost:5000/api/watchlist/${perfilSeleccionado._id}`, {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/watchlist/${perfilSeleccionado._id}`, {
           headers: {
             Authorization: `${token}`,
           },
@@ -32,7 +32,7 @@ const Watchlist = () => {
     const token = localStorage.getItem('token'); // <-- esta línea es clave
     try {
       await axios.post(
-        'http://localhost:5000/api/watchlist/remove',
+        `${import.meta.env.VITE_API_URL}/watchlist/remove`,
         {
           profileId: perfilSeleccionado._id,
           movieId,

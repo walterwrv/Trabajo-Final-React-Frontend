@@ -13,7 +13,7 @@ const EditarPerfil = () => {
       try {
         const token = localStorage.getItem('token');
         console.log(' id ',id)
-        const res = await axios.get(`http://localhost:5000/api/profiles/${id}`, {
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/profiles/${id}`, {
           headers: { Authorization: `${token}` }
         });
 
@@ -32,7 +32,7 @@ const EditarPerfil = () => {
   const onSubmit = async (data) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/profiles/${id}`, data, {
+      await axios.put(`${import.meta.env.VITE_API_URL}/profiles/${id}`, data, {
         headers: { Authorization: `${token}` }
       });
       navigate('/administrar-perfiles');

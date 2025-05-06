@@ -29,7 +29,7 @@ const Catalogo = () => {
           params.minAge = 13;
         }
     
-        const res = await axios.get('http://localhost:5000/api/movies/paginado', { params });
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/movies/paginado`, { params });
     
         setPeliculas(res.data.data);
         setTotalPaginas(res.data.totalPages);
@@ -50,7 +50,7 @@ const Catalogo = () => {
     const token = localStorage.getItem('token');
   
     try {
-      await axios.post('http://localhost:5000/api/watchlist/add', {
+      await axios.post(`${import.meta.env.VITE_API_URL}/watchlist/add`, {
         profileId: perfilSeleccionado._id,
         movieId: peliculaId,
       }, {
