@@ -3,6 +3,7 @@ import axios from 'axios';
 import { usePerfil } from '../context/PerfilContext'; // Usamos el contexto para obtener el perfil seleccionado
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useTheme } from '../context/ThemeContext'; 
 
 
 const Catalogo = () => {
@@ -12,6 +13,7 @@ const Catalogo = () => {
   const [pagina, setPagina] = useState(1);
   const [totalPaginas, setTotalPaginas] = useState(1);
   const [paginaInput, setPaginaInput] = useState(1);
+  const { modoOscuro } = useTheme(); 
 
   const navigate = useNavigate();
 
@@ -92,7 +94,7 @@ const Catalogo = () => {
     >
       Volver
     </button>
-    <div className="p-4">
+    <div className={`p-4 ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
     <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">
           Catálogo {perfilSeleccionado?.ageCategory === 'Infantil' ? 'Infantil' : 'General'}
@@ -108,7 +110,7 @@ const Catalogo = () => {
       </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
           {peliculas.map((pelicula) => (
-            <div key={pelicula._id} className="bg-gray-100 p-2 rounded shadow">
+            <div key={pelicula._id} className={`border p-4 rounded shadow ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
               <img src={pelicula.image } alt={pelicula.title} className="w-full h-48 object-cover rounded" />
               <h2 className="text-lg font-semibold mt-2">{pelicula.title}</h2>
               <p className="text-sm text-gray-600">{pelicula.description}</p>

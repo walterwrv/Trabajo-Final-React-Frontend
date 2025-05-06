@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 
 const PaginadoPeliculas = () => {
@@ -9,6 +10,7 @@ const PaginadoPeliculas = () => {
   const [totalPaginas, setTotalPaginas] = useState(1);
   const [cargando, setCargando] = useState(true);
   const [paginaInput, setPaginaInput] = useState(1);
+  const { modoOscuro } = useTheme(); 
 
 
   const navigate = useNavigate();
@@ -56,7 +58,7 @@ const PaginadoPeliculas = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className={`p-4  ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
 
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Gestión de Películas</h1>
@@ -82,14 +84,14 @@ const PaginadoPeliculas = () => {
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {peliculas.map((pelicula) => (
-          <div key={pelicula._id} className="bg-white border p-4 rounded shadow">
+          <div key={pelicula._id} className={`border p-4 rounded shadow  ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
             <img
               src={pelicula.image}
               alt={pelicula.title}
               className="w-full h-48 object-cover rounded mb-2"
             />
             <h2 className="text-lg font-semibold">{pelicula.title}</h2>
-            <p className="text-sm text-gray-600">{pelicula.description}</p>
+            <p className="text-sm text-gray-500">{pelicula.description}</p>
             <p className="text-sm mt-1">Clasificación: {pelicula.ageRating}</p>
             <p className="text-sm mt-1">Categoría: {pelicula.category}</p>
             <div className="flex gap-2 mt-3">

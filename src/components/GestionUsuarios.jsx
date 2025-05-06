@@ -1,13 +1,19 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useTheme } from '../context/ThemeContext';
+import { useNavigate } from 'react-router-dom';
 
 const GestionUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [editandoId, setEditandoId] = useState(null);
   const [formData, setFormData] = useState({ email: '', role: '' });
+  const { modoOscuro } = useTheme(); 
 
   const token = localStorage.getItem('token');
+
+  
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsuarios = async () => {
@@ -76,10 +82,19 @@ const GestionUsuarios = () => {
   if (cargando) return <p className="p-4">Cargando usuarios...</p>;
 
   return (
-    <div className="p-4">
+    <div className={`p-4 ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
       <h1 className="text-2xl font-bold mb-4">Gestión de Usuarios</h1>
+      <button
+        
+        onClick={() => {
+          navigate(-1);  // Vuelve a la vista de selección de perfil
+        }}
+          className="fixed bottom-6 right-6 px-4 py-2 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition"
+        >
+          Volver
+        </button>
       <table className="min-w-full bg-white border border-gray-300 rounded">
-        <thead className="bg-gray-100">
+        <thead className={`${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
           <tr>
             <th className="p-2 text-left border-b">Email</th>
             <th className="p-2 text-left border-b">Rol</th>
@@ -89,7 +104,7 @@ const GestionUsuarios = () => {
         <tbody>
           {usuarios.map((usuario) => (
             <tr key={usuario._id}>
-              <td className="p-2 border-b">
+              <td className={`p-2 border-b  ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
                 {editandoId === usuario._id ? (
                   <input
                     type="email"
@@ -102,7 +117,8 @@ const GestionUsuarios = () => {
                   usuario.email
                 )}
               </td>
-              <td className="p-2 border-b">
+              <td className={`p-2 border-b  ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
+
                 {editandoId === usuario._id ? (
                   <select
                     name="role"
@@ -118,7 +134,8 @@ const GestionUsuarios = () => {
                   usuario.role
                 )}
               </td>
-              <td className="p-2 border-b space-x-2">
+              <td className={`p-2 border-b space-x-2 ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
+
                 {editandoId === usuario._id ? (
                   <>
                     <button

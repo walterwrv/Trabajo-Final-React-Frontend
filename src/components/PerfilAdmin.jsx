@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { usePerfil } from '../context/PerfilContext';
+import { useTheme } from '../context/ThemeContext';
 
 const PerfilAdmin = () => {
   const [perfiles, setPerfiles] = useState([]);
   const [cargando, setCargando] = useState(true);
   const navigate = useNavigate();
+  const { modoOscuro } = useTheme(); 
   const token = localStorage.getItem('token');
 
   const fetchPerfiles = async () => {
@@ -47,9 +49,9 @@ const PerfilAdmin = () => {
 
   return (
     
-    <div className="p-6 text-white">
+    <div className={`p-6 ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
       <button
-        onClick={() => navigate('/seleccionar-perfil')}
+        onClick={() => navigate(-1)}
         className="fixed bottom-6 right-6 px-4 py-2 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition"
       >
         Volver
@@ -67,11 +69,11 @@ const PerfilAdmin = () => {
         {perfiles.map((perfil) => (
           <div
             key={perfil._id}
-            className="bg-gray-800 p-4 rounded flex justify-between items-center"
+            className={`p-4 rounded flex justify-between items-center ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-200 text-gray-900"}`}
           >
             <div>
               <p className="text-lg font-semibold">{perfil.name}</p>
-              <p className="text-sm text-gray-300">Categoría: {perfil.ageCategory}</p>
+              <p className="text-sm ">Categoría: {perfil.ageCategory}</p>
             </div>
             <div className="space-x-2">
               <button

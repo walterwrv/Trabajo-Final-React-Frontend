@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { usePerfil } from '../context/PerfilContext';
 import jwt_decode from 'jwt-decode';
 import { Settings } from 'lucide-react';
+import BotonModoOscuro from './BotonModoOscuro';
 
 
 const Navbar = () => {
@@ -47,6 +48,7 @@ const Navbar = () => {
       </button>
 
       <div className={`md:flex items-center gap-4 ${menuAbierto ? 'block' : 'hidden'} md:block`}>
+        <BotonModoOscuro />
         {perfilSeleccionado && (
           <>
             <span className="text-sm block md:inline mb-2 md:mb-0">Perfil: {perfilSeleccionado.name}</span>

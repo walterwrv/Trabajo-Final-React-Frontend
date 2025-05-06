@@ -31,15 +31,7 @@ export const AppRouter = () => (
         {/* <Route path="/register" element={<RegisterPage />} /> */}
 
         
-        <Route
-          path="/seleccionar-perfil"
-          element={
-            <PrivateRoute>
-              <Navbar />
-              <ProfileSelector />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/seleccionar-perfil" element={<PrivateRoute><Navbar /><ProfileSelector /></PrivateRoute>}/>
         <Route path="/catalogo" element={<PrivateRoute><Navbar /><Catalogo /></PrivateRoute>} />
         <Route path="/administrar-perfiles" element={<PrivateRoute><Navbar /><PerfilAdmin /></PrivateRoute>} />
         <Route path="/crear-perfil" element={<PrivateRoute><Navbar /><CreatePerfil /></PrivateRoute>} />
@@ -55,11 +47,6 @@ export const AppRouter = () => (
         <Route path="/admin/peliculas/editar/:id" element={<PrivateRoute><Navbar /><FormularioPelicula /></PrivateRoute>} />
         <Route path="/admin/peliculas/importar" element={<ImportarPeliculas />} />
         
-
-
-          {/* <Route path="dashboard" element={<p>Dash</p>} /> */}
-       
-
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
 );

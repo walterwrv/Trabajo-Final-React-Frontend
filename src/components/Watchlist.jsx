@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { usePerfil } from '../context/PerfilContext';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 const Watchlist = () => {
   const { perfilSeleccionado } = usePerfil();
   const [watchlist, setWatchlist] = useState([]);
   const navigate = useNavigate();
+  const { modoOscuro } = useTheme(); 
 
   useEffect(() => {
     const fetchWatchlist = async () => {
@@ -50,11 +52,11 @@ const Watchlist = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className={`p-4 ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
       <h1 className="text-2xl font-bold mb-4">Mi Watchlist</h1>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {watchlist.map((pelicula) => (
-          <div key={pelicula._id} className="bg-white shadow rounded p-2">
+          <div key={pelicula._id} className={`border p-4 rounded shadow ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
             <img src={pelicula.image} alt={pelicula.title} className="w-full h-48 object-cover rounded" />
             <h2 className="text-lg font-semibold mt-2">{pelicula.title}</h2>
             <p className="text-sm text-gray-600">{pelicula.description}</p>

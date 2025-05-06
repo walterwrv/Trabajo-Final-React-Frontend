@@ -1,12 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { usePerfil } from '../context/PerfilContext';
+import { useTheme } from '../context/ThemeContext';
 
 const PanelAdmin = () => {
   const navigate = useNavigate();
   const { eliminarPerfil } = usePerfil();
+  const { modoOscuro } = useTheme(); 
 
   return (
-    <div className="p-6">
+    
+    <div className={`p-10 ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
       <h1 className="text-3xl font-bold mb-6">Panel de Administración</h1>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">

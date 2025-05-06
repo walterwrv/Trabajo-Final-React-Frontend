@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 const FormularioPelicula = () => {
   const { register, handleSubmit, reset } = useForm();
@@ -9,6 +10,7 @@ const FormularioPelicula = () => {
   const { id } = useParams(); // Si hay ID, es edición
   const [cargando, setCargando] = useState(!!id);
   const token = localStorage.getItem('token');
+  const { modoOscuro } = useTheme();
 
   useEffect(() => {
     if (id) {
@@ -50,10 +52,10 @@ const FormularioPelicula = () => {
     }
   };
 
-  if (cargando) return <p className="p-4">Cargando datos...</p>;
+  if (cargando) return <p className={`p-4 ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>Cargando datos...</p>;
 
   return (
-    <div className="max-w-xl mx-auto p-4">
+    <div className={`w-full mx-auto p-4 ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
       <h1 className="text-2xl font-bold mb-4">
         {id ? 'Editar Película' : 'Nueva Película'}
       </h1>
