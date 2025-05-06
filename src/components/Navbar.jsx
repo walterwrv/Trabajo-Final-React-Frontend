@@ -32,7 +32,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-gray-900 text-white px-4 py-3 flex items-center justify-between">
-      <Link to="/" className="text-xl font-bold">
+      <Link to="/seleccionar-perfil" className="text-xl font-bold">
         NodoCinee
       </Link>
 
