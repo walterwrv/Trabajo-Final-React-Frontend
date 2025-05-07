@@ -32,8 +32,9 @@ const Catalogo = () => {
           limit: 8,
         };
   
+         // Si es perfil infantil, filtramos por minAge
         if (perfilSeleccionado?.ageCategory === 'Infantil') {
-          params.maxAge = 12;
+          params.minAge = 13;
         }
   
         if (titulo) params.title = titulo;
