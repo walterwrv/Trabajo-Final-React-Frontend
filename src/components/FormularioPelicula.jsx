@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
 
 const FormularioPelicula = () => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const { id } = useParams(); // Si hay ID, es edición
   const [cargando, setCargando] = useState(!!id);
@@ -52,8 +52,14 @@ const FormularioPelicula = () => {
     }
   };
 
-  if (cargando) return <p className={`p-4 ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>Cargando datos...</p>;
-
+  if (cargando) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p className="text-gray-600 text-lg font-medium">Cargando...</p>
+      </div>
+    );
+  }
   return (
     <div className={`w-full mx-auto p-4 ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
       <h1 className="text-2xl font-bold mb-4">
@@ -63,38 +69,43 @@ const FormularioPelicula = () => {
         <div>
           <label className="block font-medium">Título</label>
           <input
-            {...register('title', { required: true })}
+            {...register('title', { required: 'El título es obligatorio' })}
             className="w-full border p-2 rounded"
           />
+          {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
         </div>
         <div>
           <label className="block font-medium">Descripción</label>
           <textarea
-            {...register('description')}
+            {...register('description', { required: 'La descripción es obligatoria' })}
             className="w-full border p-2 rounded"
           />
+          {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
         </div>
         <div>
           <label className="block font-medium">Imagen (URL)</label>
           <input
-            {...register('image')}
+            {...register('image', { required: 'La imagen es obligatoria' })}
             className="w-full border p-2 rounded"
           />
+          {errors.image && <p className="text-red-500 text-sm">{errors.image.message}</p>}
         </div>
         <div>
           <label className="block font-medium">Categoría</label>
           <input
-            {...register('category')}
+            {...register('category', { required: 'La categoría es obligatoria' })}
             className="w-full border p-2 rounded"
           />
+          {errors.category && <p className="text-red-500 text-sm">{errors.category.message}</p>}
         </div>
         <div>
           <label className="block font-medium">Clasificación por edad</label>
           <input
             type="number"
-            {...register('ageRating')}
+            {...register('ageRating', { required: 'La clasificación por edad es obligatoria' })}
             className="w-full border p-2 rounded"
           />
+          {errors.ageRating && <p className="text-red-500 text-sm">{errors.ageRating.message}</p>}
         </div>
         <button
           type="submit"

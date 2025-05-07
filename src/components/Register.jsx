@@ -54,7 +54,14 @@ const Register = () => {
     }
   };
 
-  if (cargando) return <p>Registrando usuario...</p>;
+  if (cargando) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p className="text-gray-600 text-lg font-medium">Cargando...</p>
+      </div>
+    );
+  }
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded">
       <h2 className="text-xl font-bold mb-4">Crear cuenta</h2>

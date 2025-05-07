@@ -2,11 +2,12 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const EditarPerfil = () => {
   const { id } = useParams(); // Suponiendo que pasás el id del perfil en la ruta
   const navigate = useNavigate();
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
   useEffect(() => {
     const cargarPerfil = async () => {
@@ -36,8 +37,19 @@ const EditarPerfil = () => {
         headers: { Authorization: `${token}` }
       });
       navigate('/administrar-perfiles');
+      Swal.fire({
+        icon: 'success',
+        title: 'Perfil actualizado',
+        text: `Perfil actualizado con éxito`,
+      });
     } catch (error) {
-      console.error('Error al actualizar perfil:', error);
+      const mensaje = error.response?.data?.message || 'Error al actualizar perfil';
+      const detalle = error.response?.data?.error?.message || '';
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al agregar a la watchlist',
+        html: `<strong>${mensaje}</strong>${detalle ? `<br/><small>${detalle}</small>` : ''}`,
+      });
     }
   };
 
@@ -51,15 +63,17 @@ const EditarPerfil = () => {
     </button>
       <div className="mb-2">
         <label className="block text-sm font-medium">Nombre del Perfil</label>
-        <input {...register('name', { required: true })} className="w-full p-2 border rounded" />
+        <input {...register('name', { required: 'El nombre de perfil es obligatorio' })} className="w-full p-2 border rounded" />
+        {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
       </div>
       <div className="mb-2">
         <label className="block text-sm font-medium">Categoría de Edad</label>
-        <select {...register('ageCategory', { required: true })} className="w-full p-2 border rounded">
+        <select {...register('ageCategory', { required: 'La categoría por edad es obligatoria' })} className="w-full p-2 border rounded">
           <option value="">Seleccionar</option>
           <option value="Adulto">Adulto</option>
           <option value="Infantil">Infantil</option>
         </select>
+        {errors.ageCategory && <p className="text-red-500 text-sm">{errors.ageCategory.message}</p>}
       </div>
       <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Actualizar</button>
     </form>

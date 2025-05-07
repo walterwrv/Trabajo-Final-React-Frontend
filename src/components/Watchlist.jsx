@@ -3,15 +3,18 @@ import axios from 'axios';
 import { usePerfil } from '../context/PerfilContext';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import Swal from 'sweetalert2';
 
 const Watchlist = () => {
   const { perfilSeleccionado } = usePerfil();
   const [watchlist, setWatchlist] = useState([]);
   const navigate = useNavigate();
   const { modoOscuro } = useTheme(); 
+  const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
     const fetchWatchlist = async () => {
+      setCargando(true);
       const token = localStorage.getItem('token');
       try {
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/watchlist/${perfilSeleccionado._id}`, {
@@ -23,6 +26,9 @@ const Watchlist = () => {
       } catch (error) {
         console.error('Error al cargar la watchlist:', error);
       }
+      finally {
+        setCargando(false);
+      }
     };
 
     if (perfilSeleccionado) {
@@ -31,6 +37,7 @@ const Watchlist = () => {
   }, [perfilSeleccionado]);
 
   const eliminarDeWatchlist = async (movieId) => {
+    setCargando(true);
     const token = localStorage.getItem('token'); // <-- esta línea es clave
     try {
       await axios.post(
@@ -46,11 +53,33 @@ const Watchlist = () => {
 
       // Filtramos la película eliminada
       setWatchlist(prev => prev.filter(movie => movie._id !== movieId));
+      Swal.fire({
+        icon: 'success',
+        title: 'Película eliminada',
+        text: `Película eliminada de la watchlist con éxito`,
+      });
     } catch (error) {
-      console.error('No se pudo eliminar de la watchlist:', error);
+      const mensaje = error.response?.data?.message || 'No se pudo eliminar de la watchlist';
+      const detalle = error.response?.data?.error?.message || '';
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al agregar a la watchlist',
+        html: `<strong>${mensaje}</strong>${detalle ? `<br/><small>${detalle}</small>` : ''}`,
+      });
+    }
+    finally {
+      setCargando(false);
     }
   };
 
+  if (cargando) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p className="text-gray-600 text-lg font-medium">Cargando...</p>
+      </div>
+    );
+  }
   return (
     <div className={`p-4 ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
       <h1 className="text-2xl font-bold mb-4">Mi Watchlist</h1>

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { usePerfil } from '../context/PerfilContext';
 import { useTheme } from '../context/ThemeContext';
+import Swal from 'sweetalert2';
 
 const PerfilAdmin = () => {
   const [perfiles, setPerfiles] = useState([]);
@@ -25,15 +26,40 @@ const PerfilAdmin = () => {
   };
 
   const eliminarPerfil = async (id) => {
-    if (!window.confirm('¿Seguro que querés eliminar este perfil?')) return;
+    // if (!window.confirm('¿Seguro que querés eliminar este perfil?')) return;
+
+    const resultado = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    });
+     
 
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/profiles/${id}`, {
-        headers: { Authorization: `${token}` },
-      });
-      setPerfiles(perfiles.filter(p => p._id !== id));
+      if (resultado.isConfirmed){
+        await axios.delete(`${import.meta.env.VITE_API_URL}/profiles/${id}`, {
+          headers: { Authorization: `${token}` },
+        });
+        Swal.fire({
+          icon: 'success',
+          title: 'Perfil eliminado',
+          text: `Perfil eliminado con éxito`,
+        });
+        setPerfiles(perfiles.filter(p => p._id !== id));
+      }
+      
     } catch (error) {
-      console.error('Error al eliminar perfil:', error);
+      
+      const mensaje = error.response?.data?.message || 'Error al eliminar perfil';
+      const detalle = error.response?.data?.error?.message || '';
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al agregar a la watchlist',
+        html: `<strong>${mensaje}</strong>${detalle ? `<br/><small>${detalle}</small>` : ''}`,
+      });
     }
   };
 
@@ -45,7 +71,14 @@ const PerfilAdmin = () => {
     fetchPerfiles();
   }, []);
 
-  if (cargando) return <p className="text-white">Cargando perfiles...</p>;
+  if (cargando) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+        <p className="text-gray-600 text-lg font-medium">Cargando perfiles...</p>
+      </div>
+    );
+  }
 
   return (
     
@@ -69,7 +102,7 @@ const PerfilAdmin = () => {
         {perfiles.map((perfil) => (
           <div
             key={perfil._id}
-            className={`p-4 rounded flex justify-between items-center ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-200 text-gray-900"}`}
+            className={`border p-4 rounded shadow flex justify-between items-center ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-200 text-gray-900"}`}
           >
             <div>
               <p className="text-lg font-semibold">{perfil.name}</p>
