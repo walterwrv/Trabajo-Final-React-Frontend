@@ -124,7 +124,7 @@ const GestionUsuarios = () => {
                     name="role"
                     value={formData.role}
                     onChange={handleInputChange}
-                    className="border px-2 py-1 w-full"
+                    className={`border px-2 py-1 w-full ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}
                   >
                     <option value="standard">standard</option>
                     <option value="admin">admin</option>

@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useState } from 'react';
 
 // Esquema de validación con Yup
 const schema = Yup.object({
@@ -16,6 +17,9 @@ const schema = Yup.object({
 });
 
 const Register = () => {
+
+  const [cargando, setCargando] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -27,6 +31,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
+    setCargando(true);
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, data);
       Swal.fire({
@@ -44,8 +49,12 @@ const Register = () => {
         html: `<strong>${mensaje}</strong>${detalle ? `<br/><small>${detalle}</small>` : ''}`,
       });
     }
+    finally {
+      setCargando(false);
+    }
   };
 
+  if (cargando) return <p>Registrando usuario...</p>;
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded">
       <h2 className="text-xl font-bold mb-4">Crear cuenta</h2>
