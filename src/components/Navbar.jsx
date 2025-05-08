@@ -4,12 +4,15 @@ import { usePerfil } from '../context/PerfilContext';
 import jwt_decode from 'jwt-decode';
 import { Settings } from 'lucide-react';
 import BotonModoOscuro from './BotonModoOscuro';
+import { useTheme } from '../context/ThemeContext';
+
 
 
 const Navbar = () => {
   const [menuAbierto, setMenuAbierto] = useState(false);
   const { setPerfilSeleccionado, perfilSeleccionado } = usePerfil();
   const [rol, setRol] = useState(null);
+  const { modoOscuro } = useTheme();
 
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
@@ -31,7 +34,7 @@ const Navbar = () => {
 
 
   return (
-    <nav className="bg-gray-900 text-white px-4 py-3 flex items-center justify-between">
+    <nav className={`px-4 py-3 flex items-center justify-between ${modoOscuro === "oscuro" ? "bg-gray-100 text-gray-900" : "bg-gray-900 text-white"}`}>
       <Link to="/seleccionar-perfil" className="text-xl font-bold">
         NodoCinee
       </Link>
@@ -48,6 +51,11 @@ const Navbar = () => {
       </button>
 
       <div className={`md:flex items-center gap-4 ${menuAbierto ? 'block' : 'hidden'} md:block`}>
+        <Link to="/seleccionar-perfil" className="border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-semibold text-sm px-5 py-2 rounded-lg transition-all duration-300"
+
+>
+          Inicio
+        </Link>
         <BotonModoOscuro />
         {perfilSeleccionado && (
           <>
