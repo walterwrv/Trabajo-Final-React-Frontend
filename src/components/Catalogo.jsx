@@ -131,14 +131,14 @@ const Catalogo = () => {
             placeholder="Buscar por título"
             value={tituloInput}
             onChange={(e) => setTituloInput(e.target.value)}
-            className="border p-2 rounded w-full md:w-1/3"
+            className={`border p-2 rounded w-full md:w-1/3 ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}
           />
           <input
             type="text"
             placeholder="Filtrar por categoría"
             value={categoriaInput}
             onChange={(e) => setCategoriaInput(e.target.value)}
-            className="border p-2 rounded w-full md:w-1/3"
+            className={`border p-2 rounded w-full md:w-1/3 ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}
           />
           <div className="flex gap-2">
             <button

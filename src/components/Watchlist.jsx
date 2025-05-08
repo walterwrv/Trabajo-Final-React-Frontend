@@ -84,19 +84,25 @@ const Watchlist = () => {
     <div className={`p-4 ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
       <h1 className="text-2xl font-bold mb-4">Mi Watchlist</h1>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {watchlist.map((pelicula) => (
-          <div key={pelicula._id} className={`border p-4 rounded shadow ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
-            <img src={pelicula.image} alt={pelicula.title} className="w-full h-48 object-cover rounded" />
-            <h2 className="text-lg font-semibold mt-2">{pelicula.title}</h2>
-            <p className="text-sm text-gray-600">{pelicula.description}</p>
-            <button
-              onClick={() => eliminarDeWatchlist(pelicula._id)}
-              className="mt-2 px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition"
-            >
-              Eliminar
-            </button>
-          </div>
-        ))}
+        {watchlist.length === 0 ? (
+          <p>No existen películas en la watchlist.</p>
+        ) : 
+        (
+          watchlist.map((pelicula) => (
+                  <div key={pelicula._id} className={`border p-4 rounded shadow ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
+                    <img src={pelicula.image} alt={pelicula.title} className="w-full h-48 object-cover rounded" />
+                    <h2 className="text-lg font-semibold mt-2">{pelicula.title}</h2>
+                    <p className="text-sm text-gray-600">{pelicula.description}</p>
+                    <button
+                      onClick={() => eliminarDeWatchlist(pelicula._id)}
+                      className="mt-2 px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700 transition"
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+            )
+          )
+        )}
       </div>
       
       <button
