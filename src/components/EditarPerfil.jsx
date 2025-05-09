@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useRef } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 
 const EditarPerfil = () => {
@@ -11,6 +12,7 @@ const EditarPerfil = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
   const categoriaOriginalRef = useRef(null);
+  const { modoOscuro } = useTheme();
 
   useEffect(() => {
     const cargarPerfil = async () => {
@@ -70,7 +72,7 @@ const EditarPerfil = () => {
 
   return (
     <>
-    <form onSubmit={handleSubmit(onSubmit)} className="mt-4 bg-gray-100 p-4 rounded shadow">
+    <form onSubmit={handleSubmit(onSubmit)} className={`mt-4 bg-gray-100 p-4 rounded shadow ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
     
       <div className="mb-2">
         <label className="block text-sm font-medium">Nombre del Perfil</label>
