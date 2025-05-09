@@ -73,7 +73,7 @@ const CreatePerfil = () => {
           <label className="block mb-1 font-semibold">Categoría de edad</label>
           <select
             {...register('ageCategory', { required: 'La categoría por edad es obligatoria' })}
-            className="w-full p-2 border rounded"
+            className={`w-full p-2 border rounded ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}
           >
             <option value="Infantil">Infantil</option>
             <option value="Adulto">Adulto</option>
