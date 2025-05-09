@@ -6,17 +6,16 @@ import { useState } from "react";
 import { useNavigate, Link} from "react-router-dom";
 
 
-const schema = Yup.object({
-  email: Yup.string().email("Email inválido").required("Campo obligatorio"),
-  password: Yup.string().min(6, "Mínimo 6 caracteres").required("Campo obligatorio"),
-});
-
-
-
 export default function Login() {
   const { login } = useAuth();
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const schema = Yup.object({
+    email: Yup.string().email("Email inválido").required("Campo obligatorio"),
+    password: Yup.string().min(6, "Mínimo 6 caracteres").required("Campo obligatorio"),
+  });
+
   const {
     register,
     handleSubmit,
@@ -27,7 +26,6 @@ export default function Login() {
     setError("");
     try {
       await login(data.email, data.password);
-      console.log('Login exitoso');
       navigate("/seleccionar-perfil"); // redirige si el login fue exitoso
     } catch (err) {
       setError("Credenciales incorrectas o error del servidor");

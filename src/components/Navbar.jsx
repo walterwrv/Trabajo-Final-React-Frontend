@@ -27,7 +27,7 @@ const Navbar = () => {
   useEffect(() => {
     if (token) {
       const decoded = jwt_decode(token);
-      console.log('role ',decoded.role)
+      // console.log('role ',decoded.role)
       setRol(decoded.role);
     }
   }, [token]);

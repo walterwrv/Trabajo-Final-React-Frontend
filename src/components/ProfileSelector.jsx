@@ -18,7 +18,6 @@ const ProfileSelector = () => {
    useEffect(() => {
     if (token) {
       const decoded = jwt_decode(token);
-      console.log('role ',decoded.role)
       setRol(decoded.role);
     }
   }, [token]);
@@ -65,7 +64,7 @@ const ProfileSelector = () => {
           </button>
         ))}
       </div>
-      {/* Mostrar solo si el rol es dueño o standard */}
+      {/* Mostrar solo si el rol es dueño */}
       {(rol === 'owner') && (
         <button
           onClick={() => navigate('/administrar-perfiles')}

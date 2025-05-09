@@ -43,7 +43,6 @@ export const AuthProvider = ({ children }) => {
       });
       localStorage.setItem("token", res.data.token);
       setUser(res.data.user);
-      navigate("/perfiles");
     } catch (err) {
       throw err;
     }
