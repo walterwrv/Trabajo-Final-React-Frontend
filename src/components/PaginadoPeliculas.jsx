@@ -18,19 +18,25 @@ const PaginadoPeliculas = () => {
   const token = localStorage.getItem('token');
 
   const obtenerPeliculas = async (paginaActual) => {
-    setCargando(true);
-    try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/movies/paginado`, {
-        params: { page: paginaActual, limit: 8 }, // ajustá el limit si querés
-      });
-      setPeliculas(res.data.data);
-      setTotalPaginas(res.data.totalPages);
-    } catch (error) {
-      console.error('Error al obtener películas paginadas:', error);
-    } finally {
-      setCargando(false);
-    }
-  };
+  setCargando(true);
+  try {
+    const token = localStorage.getItem('token'); // o donde lo tengas guardado
+
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/movies/paginado`, {
+      params: { page: paginaActual, limit: 8 },
+      headers: {
+        Authorization: `${token}`, // encabezado con el token
+      },
+    });
+
+    setPeliculas(res.data.data);
+    setTotalPaginas(res.data.totalPages);
+  } catch (error) {
+    console.error('Error al obtener películas paginadas:', error);
+  } finally {
+    setCargando(false);
+  }
+};
 
   useEffect(() => {
     obtenerPeliculas(pagina);
