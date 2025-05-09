@@ -19,8 +19,6 @@ const CreatePerfil = () => {
   const onSubmit = async (data) => {
     setCargando(true);
     try {
-      console.log('data ', data)
-      console.log('token ', token)
       await axios.post(`${import.meta.env.VITE_API_URL}/profiles/create`, data, {
         headers: { Authorization: `${token}` }
       });

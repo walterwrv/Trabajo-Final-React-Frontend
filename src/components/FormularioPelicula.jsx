@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
+import Swal from 'sweetalert2';
 
 const FormularioPelicula = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -37,18 +38,31 @@ const FormularioPelicula = () => {
         await axios.put(`${import.meta.env.VITE_API_URL}/movies/${id}`, data, {
           headers: { Authorization: `${token}` },
         });
-        alert('Película actualizada correctamente');
+        Swal.fire({
+          icon: 'success',
+          title: 'Película actualizada',
+          text: `Película actualizada correctamente`,
+        });
       } else {
         // Crear
         await axios.post(`${import.meta.env.VITE_API_URL}/movies/create`, data, {
           headers: { Authorization: `${token}` },
         });
-        alert('Película creada correctamente');
+        Swal.fire({
+          icon: 'success',
+          title: 'Película creada',
+          text: `Película creada correctamente`,
+        });
       }
       navigate('/admin/peliculas/paginado');
     } catch (error) {
-      console.error('Error al guardar película:', error);
-      alert('Hubo un problema al guardar la película');
+      const mensaje = error.response?.data?.message || 'Hubo un problema al guardar la película';
+      const detalle = error.response?.data?.error?.message || '';
+      Swal.fire({
+        icon: 'error',
+        title: 'Hubo un problema al guardar la película',
+        html: `<strong>${mensaje}</strong>${detalle ? `<br/><small>${detalle}</small>` : ''}`,
+      });
     }
   };
 

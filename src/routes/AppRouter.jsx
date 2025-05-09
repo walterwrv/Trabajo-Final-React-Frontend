@@ -45,7 +45,7 @@ export const AppRouter = () => (
 
         <Route path="/admin/peliculas/nueva" element={<PrivateRoute><Navbar /><FormularioPelicula /></PrivateRoute>} />
         <Route path="/admin/peliculas/editar/:id" element={<PrivateRoute><Navbar /><FormularioPelicula /></PrivateRoute>} />
-        <Route path="/admin/peliculas/importar" element={<ImportarPeliculas />} />
+        <Route path="/admin/peliculas/importar" element={<PrivateRoute><Navbar /><ImportarPeliculas /></PrivateRoute>} />
         
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>

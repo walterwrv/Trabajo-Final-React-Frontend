@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 
 const ImportarPeliculas = () => {
@@ -10,6 +11,7 @@ const ImportarPeliculas = () => {
   const [cargando, setCargando] = useState(false);
   const [importados, setImportados] = useState([]); // IDs ya importados
   const navigate = useNavigate();
+  const { modoOscuro } = useTheme(); 
 
   const handleBuscar = async () => {
     if (!busqueda.trim()) return;
@@ -58,7 +60,7 @@ const ImportarPeliculas = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className={`p-4 ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
         <button
             onClick={() => navigate(-1)}
             className="fixed bottom-6 right-6 px-4 py-2 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition"
@@ -66,13 +68,13 @@ const ImportarPeliculas = () => {
             Volver
         </button>
       <h1 className="text-2xl font-bold mb-4">Importar Películas desde OMDb</h1>
-      <div className="flex gap-2 mb-6">
+      <div className="flex gap-2 mb-6 ">
         <input
           type="text"
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
           placeholder="Buscar por título"
-          className="border p-2 rounded w-full"
+          className={`border p-2 rounded w-full ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}
         />
         <button
           onClick={handleBuscar}
@@ -88,7 +90,7 @@ const ImportarPeliculas = () => {
         {resultados.map((movie) => {
           const yaImportada = importados.includes(movie.imdbID);
           return (
-            <div key={movie.imdbID} className="border p-2 rounded shadow-sm bg-white">
+            <div key={movie.imdbID} className={`border p-2 rounded shadow-sm ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
               <img
                 src={movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/150'}
                 alt={movie.Title}

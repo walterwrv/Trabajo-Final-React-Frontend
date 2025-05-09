@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import Swal from 'sweetalert2';
 
 
 const PaginadoPeliculas = () => {
@@ -42,15 +43,29 @@ const PaginadoPeliculas = () => {
   };
 
   const eliminarPelicula = async (id) => {
-    const confirmar = confirm('¿Estás seguro de que querés eliminar esta película?');
-    if (!confirmar) return;
+    
+    const resultado = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    });
 
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/movies/${id}`, {
-        headers: { Authorization: `${token}` },
-      });
+      if (resultado.isConfirmed){
+        await axios.delete(`${import.meta.env.VITE_API_URL}/movies/${id}`, {
+          headers: { Authorization: `${token}` },
+        });
 
-      setPeliculas((prev) => prev.filter((pelicula) => pelicula._id !== id));
+        setPeliculas((prev) => prev.filter((pelicula) => pelicula._id !== id));
+        Swal.fire({
+          icon: 'success',
+          title: 'Película eliminada',
+          text: `Película eliminada con éxito`,
+        });
+      }
     } catch (error) {
       console.error('Error al eliminar película:', error);
       alert('No se pudo eliminar la película');
