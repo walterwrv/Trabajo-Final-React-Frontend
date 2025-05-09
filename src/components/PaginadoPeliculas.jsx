@@ -20,8 +20,13 @@ const PaginadoPeliculas = () => {
   const obtenerPeliculas = async (paginaActual) => {
     setCargando(true);
     try {
+      const token = localStorage.getItem('token');
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/movies/paginado`, {
-        params: { page: paginaActual, limit: 8 }, // ajustá el limit si querés
+        params: { page: paginaActual, limit: 8 },
+        
+        headers: {
+          Authorization: `${token}`,
+        }, // ajustá el limit si querés
       });
       setPeliculas(res.data.data);
       setTotalPaginas(res.data.totalPages);

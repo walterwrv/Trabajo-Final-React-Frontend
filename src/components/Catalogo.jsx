@@ -27,6 +27,8 @@ const Catalogo = () => {
     const fetchPeliculas = async () => {
       setCargando(true);
       try {
+        const token = localStorage.getItem('token');
+
         const params = {
           page: pagina,
           limit: 8,
@@ -40,7 +42,10 @@ const Catalogo = () => {
         if (titulo) params.title = titulo;
         if (categoria) params.category = categoria;
   
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/movies/paginado`, { params });
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/movies/paginado`, { params,
+        headers: {
+          Authorization: `${token}`,
+        }, });
   
         setPeliculas(res.data.data);
         setTotalPaginas(res.data.totalPages);
