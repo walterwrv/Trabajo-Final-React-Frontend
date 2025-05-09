@@ -1,27 +1,41 @@
-## Elección de axios
+# Nodo Cine - Frontend
 
-Manejo de errores más sencillo:
+Este es el frontend del proyecto **Nodo Cine**, construido con React, Vite y Tailwind CSS.
 
-    Fetch: Solo rechaza una promesa si hay un error de red o algo similar. Si la respuesta del servidor es un código de error como 404 o 500, Fetch no rechaza automáticamente la promesa. Necesitas manejar esto manualmente verificando response.ok o response.status.
+## Requisitos Previos
 
-    Axios: Rechaza la promesa automáticamente si hay un código de estado de error (por ejemplo, 404, 500), lo que hace que el manejo de errores sea más intuitivo.
+- Node.js
 
-Soporte para JSON de manera predeterminada:
+## Instalación
 
-    Fetch: Necesitas llamar a response.json() para convertir la respuesta en formato JSON.
+```bash
+npm install
+```
 
-    Axios: Convierte automáticamente las respuestas a JSON, lo que hace que tu código sea más limpio.
+## Variables de Entorno
 
-## Utilización de react-router-dom
+Crea un archivo `.env` en la raíz con la URL del backend:
 
-1. Navegación en aplicaciones SPA (Single Page Applications)
+```
+VITE_API_URL=https://trabajo-final-react-backend.onrender.com/api
+```
 
-React es comúnmente utilizado para crear aplicaciones de una sola página. En una SPA, toda la aplicación se carga inicialmente en el navegador, y la navegación entre las diferentes vistas (páginas) se maneja sin recargar la página completa. react-router-dom permite esta funcionalidad de navegación sin recargar el navegador, manteniendo la experiencia de usuario fluida y rápida.
+## Ejecución en desarrollo
 
-2. Manejo de Rutas
+```bash
+npm run dev
+```
 
-react-router-dom facilita la definición de diferentes rutas (URLs) en tu aplicación y qué componentes deben ser renderizados cuando se accede a esas rutas. Básicamente, te permite crear URLs amigables para el usuario y asociarlas con diferentes partes de tu aplicación.
+## Ejecución en en netlify
 
-Ejemplo: Si tienes una ruta /home en tu aplicación, puedes asociar esa ruta con un componente Home que se renderizará cuando el usuario navegue a esa URL.
+https://nodo-cine-frontend.netlify.app/
 
-react-router-dom se utiliza porque te permite manejar rutas y la navegación dentro de una SPA de manera sencilla y eficaz, además de manejar características avanzadas como parámetros en la URL, navegación programática, y rutas anidadas, todo mientras optimiza la experiencia del usuario con transiciones sin recarga de página.
+## Características
+
+- Login con JWT
+- Selección de perfil
+- Catálogo de películas filtrado por edad y paginado
+- Modo claro / oscuro
+- Watchlist por perfil
+- Administración (usuarios, perfiles, películas)
+- Importación desde OMDb API
