@@ -54,13 +54,9 @@ const EditarPerfil = () => {
   };
 
   return (
+    <>
     <form onSubmit={handleSubmit(onSubmit)} className="mt-4 bg-gray-100 p-4 rounded shadow">
-    <button
-      onClick={() => navigate('/administrar-perfiles')}
-      className="fixed bottom-6 right-6 px-4 py-2 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition"
-    >
-      Volver
-    </button>
+    
       <div className="mb-2">
         <label className="block text-sm font-medium">Nombre del Perfil</label>
         <input {...register('name', { required: 'El nombre de perfil es obligatorio' })} className="w-full p-2 border rounded" />
@@ -77,6 +73,14 @@ const EditarPerfil = () => {
       </div>
       <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Actualizar</button>
     </form>
+    <button
+      type="button"
+      onClick={() => navigate('/administrar-perfiles')}
+      className="fixed bottom-6 right-6 px-4 py-2 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition"
+    >
+      Volver
+    </button>
+    </>
   );
 };
 
