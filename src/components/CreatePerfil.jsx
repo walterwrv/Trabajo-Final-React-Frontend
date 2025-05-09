@@ -3,11 +3,13 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
+import { useTheme } from '../context/ThemeContext';
 
 const CreatePerfil = () => {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const [cargando, setCargando] = useState(false);
+  const { modoOscuro } = useTheme(); 
 
   const {
     register,
@@ -54,7 +56,7 @@ const CreatePerfil = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-4 max-w-md mx-auto">
+    <form onSubmit={handleSubmit(onSubmit)} className={`space-y-4 p-4 max-w-md mx-auto ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
       <button
         onClick={() => navigate('/administrar-perfiles')}
         className="fixed bottom-6 right-6 px-4 py-2 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition"
