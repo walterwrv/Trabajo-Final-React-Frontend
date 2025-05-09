@@ -3,22 +3,26 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useRef } from 'react';
+
 
 const EditarPerfil = () => {
   const { id } = useParams(); // Suponiendo que pasás el id del perfil en la ruta
   const navigate = useNavigate();
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const categoriaOriginalRef = useRef(null);
 
   useEffect(() => {
     const cargarPerfil = async () => {
       try {
         const token = localStorage.getItem('token');
-        console.log(' id ',id)
+        
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/profiles/${id}`, {
           headers: { Authorization: `${token}` }
         });
 
         const perfil = res.data.profile;
+        categoriaOriginalRef.current = perfil.ageCategory;
         // Setear los valores iniciales en el formulario
         setValue('name', perfil.name);
         setValue('ageCategory', perfil.ageCategory);
@@ -32,7 +36,18 @@ const EditarPerfil = () => {
 
   const onSubmit = async (data) => {
     try {
+      
       const token = localStorage.getItem('token');
+
+      // Verificamos si hubo cambio de Adulto a Infantil
+      const categoriaAnterior = categoriaOriginalRef.current;
+      const categoriaNueva = data.ageCategory;
+      
+      if (categoriaAnterior === 'Adulto' && categoriaNueva === 'Infantil') {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/profiles/${id}/watchlist`, {
+        headers: { Authorization: `${token}` }
+      });
+    }
       await axios.put(`${import.meta.env.VITE_API_URL}/profiles/${id}`, data, {
         headers: { Authorization: `${token}` }
       });
