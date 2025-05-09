@@ -81,7 +81,7 @@ const EditarPerfil = () => {
       </div>
       <div className="mb-2">
         <label className="block text-sm font-medium">Categoría de Edad</label>
-        <select {...register('ageCategory', { required: 'La categoría por edad es obligatoria' })} className="w-full p-2 border rounded">
+        <select {...register('ageCategory', { required: 'La categoría por edad es obligatoria' })} className={`w-full p-2 border rounded ${modoOscuro === "oscuro" ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
           <option value="">Seleccionar</option>
           <option value="Adulto">Adulto</option>
           <option value="Infantil">Infantil</option>
