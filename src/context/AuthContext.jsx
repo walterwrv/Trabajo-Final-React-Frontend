@@ -12,13 +12,13 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null); // datos del usuario (email, id, etc.)
-  const [loading, setLoading] = useState(true);
+  
 
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchUser = async () => {
-      if (!token) return setLoading(false);
+     
       try {
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/auth/user`, {
           headers: { Authorization: `${token}` },
@@ -27,9 +27,7 @@ export const AuthProvider = ({ children }) => {
       } catch (err) {
         console.error("Error al cargar usuario", err);
         localStorage.removeItem("token");
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
 
     fetchUser();
@@ -55,7 +53,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
